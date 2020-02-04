@@ -3,7 +3,7 @@
  * @Author: dagaozi 
  * @Date: 2019-10-05 19:59:03 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-07 15:17:34
+ * @Last Modified time: 2019-10-20 18:23:58
  */
 const { Sequelize, Model } = require('sequelize')
 // const {sequelize:db}=require('../db/orm') 重命名 相当于es6里面的 sequelize as db
@@ -24,6 +24,7 @@ ItemRecord.init({
 },
   {
     sequelize,
+    timestamps: true,
     tableName: 'item_record'
   })
 module.exports = {

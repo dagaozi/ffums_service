@@ -9,10 +9,8 @@ class ItemConfigV extends Validator{
         max:255
       })
     ]
-    this.category=[
-      new Rule('isLength','名称需小于10个字符',{
-        max:10
-      })
+    this.categoryId=[
+      new Rule('isInt','需要整数类型')
     ]
     this.inputType=[
       new Rule('isLength','名称需小于2个字符',{
@@ -59,7 +57,7 @@ class UpdateItemConfigV extends ItemConfigV{
     ]
   }
   async validateName(vals){
-    const {id,name}=vals.body
+    const {id,name,categoryId}=vals.body
    const Op=Sequelize.Op
     const item= await ItemConfig.findOne({
       where:{

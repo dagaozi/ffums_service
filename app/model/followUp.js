@@ -3,7 +3,7 @@
  * @Author: dagaozi 
  * @Date: 2019-10-05 19:57:30 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-08 15:22:01
+ * @Last Modified time: 2019-10-19 15:22:32
  */
 
 const { Sequelize, Model } = require('sequelize')
@@ -22,6 +22,8 @@ FollowUp.init({
   patientId: Sequelize.INTEGER,
   dateTime: Sequelize.DATE,
   type: Sequelize.STRING(2),
+  //病理号
+  pathologicalNumber:Sequelize.STRING(20),
   note: Sequelize.TEXT()
 },
   {

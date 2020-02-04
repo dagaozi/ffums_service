@@ -3,15 +3,14 @@
  * @Author: dagaozi 
  * @Date: 2019-09-24 12:24:18 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-12 20:10:41
+ * @Last Modified time: 2019-10-20 18:28:11
  */
 const router = require('koa-router')()
-const { Sequelize } = require('sequelize')
 const { SuccessModel, ErrorModel } = require('../../core/model/resModel1')
 const { HttpException } = require('../../core/model/http-exception')
-const { sequelize } = require('../db/orm')
-const { AddPatientV,UpdatePatientV } = require('../validator/patient')
+const { AddPatientV, UpdatePatientV } = require('../validator/patient')
 const { Patient } = require('../model/patient')
+
 
 router.prefix('/patient')
 router.post('/add', async (ctx, next) => {
@@ -36,13 +35,13 @@ router.post('/add', async (ctx, next) => {
 
 router.get('/getPatient', async (ctx, next) => {
   const patient = await Patient.findOne({
-    where:{
-      id:ctx.request.body.id
+    where: {
+      id: ctx.request.body.id
     }
   })
   //通过下面的方法过滤掉不需要的字段，如果是对一个数组序列号且去掉不需要的数据，就需要在对象上增加exclude字段了通过原型链添加，
   //直接添加会被sequelize映射到数据库上示例见patient对象
- // patient.exclude=['id','name']
+  // patient.exclude=['id','name']
   ctx.body = new SuccessModel(patient)
 })
 router.get('/getPatients', async (ctx, next) => {
@@ -54,13 +53,13 @@ router.get('/getPatients', async (ctx, next) => {
   ctx.body = new SuccessModel(list)
 })
 router.get('/search', async (ctx, next) => {
-  const list=await Patient.getPatientByConditon(ctx.request.query)
+  const list = await Patient.getPatientByConditon(ctx.request.query)
   ctx.body = new SuccessModel(list)
 })
 router.get('/getbyId', async (ctx, next) => {
-  const patient=await Patient.findOne({
-    where :{
-      id:ctx.request.query.id
+  const patient = await Patient.findOne({
+    where: {
+      id: ctx.request.query.id
     }
   })
   ctx.body = new SuccessModel(patient)
@@ -68,7 +67,7 @@ router.get('/getbyId', async (ctx, next) => {
 router.post('/update', async (ctx, next) => {
   const v = await new UpdatePatientV().validate(ctx)
   const updatePatient = {
-    id:v.get('body.id'),
+    id: v.get('body.id'),
     name: v.get('body.name'),
     gender: v.get('body.gender'),
     idCard: v.get('body.idCard'),
@@ -80,25 +79,37 @@ router.post('/update', async (ctx, next) => {
     address: v.get('body.address'),
     remark: v.get('body.remark'),
   }
+
   //判断条件在校验器中
-  const patient= await Patient.findOne({
-    where:{
-      id:updatePatient.id
+  const patient = await Patient.findOne({
+    where: {
+      id: updatePatient.id
     }
   })
-  if(!patient){
+  if (!patient) {
     ctx.body = new ErrorModel("未找到该患者")
-  }else{
-    Object.assign(patient,updatePatient)
+  } else {
+    Object.assign(patient, updatePatient)
     await patient.save()
     ctx.body = new SuccessModel('修改患者成功')
   }
- 
+
 
 })
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 patient json'
+//删除患者以及患者的随访信息
+router.post('/delete', async (ctx, next) => {
+  const patientId = ctx.request.body.patientId
+  const patient = await Patient.findOne({
+    where: {
+      id: patientId
+    }
+  })
+  if (!patient) {
+    ctx.body = new ErrorModel("未找到该患者")
+  } else {
+   await patient.delete()
+   
+    ctx.body = new SuccessModel('删除患者成功')
   }
 })
 

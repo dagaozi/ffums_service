@@ -3,7 +3,7 @@
  * @Author: dagaozi 
  * @Date: 2019-09-24 12:24:18 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-08 18:41:02
+ * @Last Modified time: 2019-10-20 16:15:42
  */
 const router = require('koa-router')()
 const { Sequelize } = require('sequelize')
@@ -24,7 +24,7 @@ router.post('/add', async (ctx, next) => {
 
 router.get('/getAll', async (ctx, next) => {
   const list = await ItemConfig.findAll({
-    attributes: ['name', 'category','inputType','typeOption','sort'],
+    //attributes: ['name', 'categoryId','inputType','typeOption','sort'],
     order: [
       ['createdAt', 'ASC']
     ],

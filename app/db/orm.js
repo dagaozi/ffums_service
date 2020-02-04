@@ -28,9 +28,9 @@ const sequelize=new Sequelize(database,user,password,{
 // })
 Model.prototype.toJSON=function() {  
   let data=clone(this.dataValues)
-  unset(data,'updated_at')
-  unset(data,'created_at')
-  unset(data,'deleted_at')
+  unset(data,'updatedAt')
+  unset(data,'createdAt')
+  unset(data,'deletedAt')
   //过滤掉不需要的参数
   if(isArray(this.exclude)){
     this.exclude.forEach(val => {

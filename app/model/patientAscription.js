@@ -2,7 +2,7 @@
  * @Author: dagaozi 
  * @Date: 2019-10-05 19:57:46 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-12 10:28:01
+ * @Last Modified time: 2019-10-19 15:26:13
  */
 
 const { Sequelize, Model } = require('sequelize')
@@ -26,5 +26,5 @@ PatientAscription.init({
     tableName: 'patient_ascription'
   })
 module.exports = {
-  Department
+  PatientAscription
 }

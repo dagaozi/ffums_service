@@ -21,9 +21,6 @@ class PatientV extends Validator{
 class AddPatientV extends PatientV{
   constructor(){
     super()
-    this.id=[
-      new Rule('isInt','患者ID格式不对')
-    ]
   }
   async validateIdCard(vals){
     const idCard=vals.body.idCard

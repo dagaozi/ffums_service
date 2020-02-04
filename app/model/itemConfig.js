@@ -3,7 +3,7 @@
  * @Author: dagaozi 
  * @Date: 2019-10-05 19:57:14 
  * @Last Modified by: dagaozi
- * @Last Modified time: 2019-10-08 19:34:43
+ * @Last Modified time: 2019-10-19 16:12:41
  */
 
 const { Sequelize, Model } = require('sequelize')
