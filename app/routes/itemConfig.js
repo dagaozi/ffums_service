@@ -1,5 +1,5 @@
 /*
-患者数据
+指标item
  * @Author: dagaozi 
  * @Date: 2019-09-24 12:24:18 
  * @Last Modified by: dagaozi
@@ -14,6 +14,16 @@ const { AddItemConfigV,UpdateItemConfigV} = require('../validator/itemConfig')
 const { ItemConfig } = require('../model/itemConfig')
 
 router.prefix('/itemconfig')
+
+
+/**
+ *   @api {POST} itemconfig/add 新增指标项
+ *   @apiGroup itemconfig
+ *   @apiParam  {String} name 指标名称   
+ *   @apiParam  {String} inputType 输入类型 {1:文字/2:选项}  
+ *   @apiParam  {String} typeOption 选项配置（用特殊符号分割）
+ *   @apiParam  {Integer} sort 排序   
+ */
 router.post('/add', async (ctx, next) => {
   const v = await new AddItemConfigV().validate(ctx)
   const newItem = ctx.request.body
@@ -21,7 +31,10 @@ router.post('/add', async (ctx, next) => {
   ctx.body = new SuccessModel('新增项目成功')
 
 })
-
+/**
+ *   @api {GET} itemconfig/getAll 获取所有指标配置
+ *   @apiGroup itemconfig
+ */
 router.get('/getAll', async (ctx, next) => {
   const list = await ItemConfig.findAll({
     //attributes: ['name', 'categoryId','inputType','typeOption','sort'],
@@ -44,6 +57,11 @@ router.get('/getbyId', async (ctx, next) => {
   })
   ctx.body = new SuccessModel(item)
 })
+
+/**
+ *   @api {POST} itemconfig/update 更新指标配置
+ *   @apiGroup itemconfig
+ */
 router.post('/update', async (ctx, next) => {
   const v = await new UpdateItemConfigV().validate(ctx)
   const updateItem = ctx.request.body

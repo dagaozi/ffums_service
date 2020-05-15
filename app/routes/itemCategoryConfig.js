@@ -1,5 +1,5 @@
 /*
-患者数据
+指标配置
  * @Author: dagaozi 
  * @Date: 2019-09-24 12:24:18 
  * @Last Modified by: dagaozi
@@ -14,6 +14,14 @@ const { AddItemCategoryConfigV,UpdateItemCategoryConfigV} = require('../validato
 const { ItemCategoryConfig } = require('../model/itemCategoryConfig')
 
 router.prefix('/itemCategoryconfig')
+
+/**
+ *   @api {POST} itemCategoryconfig/add 新增目录
+ *   @apiGroup itemCategoryconfig
+ *   @apiParam  {String} name 目录名称   
+ *   @apiParam  {Integer} categoryId 所属类别 {1:实验室指标/2:特检指标/3:人体成分/:4其他信息}   
+ *   @apiParam  {Integer} sort 排序   
+ */
 router.post('/add', async (ctx, next) => {
   const v = await new AddItemCategoryConfigV().validate(ctx)
   const newItem = ctx.request.body
@@ -21,7 +29,10 @@ router.post('/add', async (ctx, next) => {
   ctx.body = new SuccessModel('新增目录成功')
 
 })
-
+/**
+ *   @api {GET} itemCategoryconfig/getAll 获取所有指标目录
+ *   @apiGroup itemCategoryconfig
+ */
 router.get('/getAll', async (ctx, next) => {
   const list = await ItemCategoryConfig.findAll({
     attributes: ['id','name', 'category','sort'],
@@ -36,6 +47,11 @@ router.get('/getAll', async (ctx, next) => {
 //   const list=await Patient.getPatientByConditon(ctx.request.query)
 //   ctx.body = new SuccessModel(list)
 // })
+/**
+ *   @api {GET} itemCategoryconfig/getbyId 获取目录
+ *   @apiGroup itemCategoryconfig
+ *   @apiParam  {Integer} id 目录ID   
+ */
 router.get('/getbyId', async (ctx, next) => {
   const item=await ItemCategoryConfig.findOne({
     where :{
@@ -44,6 +60,13 @@ router.get('/getbyId', async (ctx, next) => {
   })
   ctx.body = new SuccessModel(item)
 })
+
+/**
+ *   @api {GET} itemCategoryconfig/update 更新目录
+ *   @apiGroup itemCategoryconfig
+ *   @apiParam  {Integer} id 目录ID   
+ *   @apiParam  {String} name 目录名称   
+ */
 router.post('/update', async (ctx, next) => {
   const v = await new UpdateItemCategoryConfigV().validate(ctx)
   const updateItem = ctx.request.body

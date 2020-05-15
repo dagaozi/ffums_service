@@ -24,6 +24,7 @@ class ItemConfigV extends Validator{
       })
     ]
     this.sort=[
+      new Rule('nullable'),
       new Rule('isInt','需要整数类型'),
       new Rule('isLength','需小于6位数',{
         max:5

@@ -24,6 +24,14 @@ router.get('/', async (ctx, next) => {
 })
 
 //新增用户
+/**
+ *   @api {POST} user/register 新增用户
+ *   @apiGroup user
+ *   @apiParam  {String} name 用户名
+ *   @apiParam  {String} password1 密码
+ *   @apiParam  {String} password2 密码
+ *   @apiParam  {String} grade 等级（USER=3 SUER=6 ADMIN=9）
+ */
 router.post('/register', async (ctx, next) => {
   const v = await new RegisterValidator().validate(ctx)
   const user = {
@@ -38,7 +46,16 @@ router.post('/register', async (ctx, next) => {
 
 })
 
-//登录
+//登录     apidoc -i app/routes/ -o doc/ 更新接口文档
+/**
+ *   @api {POST} user/login 登录
+ *   @apiDescription 登录接口
+ *   @apiGroup user
+ *   @apiName logistics/policys
+ *   @apiParam  {Integer} type   登录类型：（填写101）
+ *   @apiParam  {String} account 用户名
+ *   @apiParam  {String} password 密码
+ */
 router.post('/login', async (ctx, next) => {
   const v = await new LoginValidator().validate(ctx)
   let token
@@ -56,6 +73,11 @@ router.post('/login', async (ctx, next) => {
 
 })
 //验证token是否有效
+/**
+ *   @api {POST} user/verifyToken 验证token是否有效
+ *   @apiGroup user
+ *   @apiParam  {String} token 令牌
+ */
 router.post('/verifyToken',async (ctx, next) => {
   const v=await new EmptyValidator().validate(ctx)
  const result= Auth.verifyToken(v.get('body.token'))

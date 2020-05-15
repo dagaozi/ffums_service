@@ -16,8 +16,16 @@ const UserType={
   SUSER:6,
   ADMIN:9,
   isType
+}Input
+
+const InputType={
+  TXT:1,
+  SELECT:2,
+  isType
 }
+
 module.exports={
   LoginType,
-  UserType
+  UserType,
+  InputType
 }

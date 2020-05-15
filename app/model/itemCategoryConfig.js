@@ -21,6 +21,7 @@ ItemCategoryConfig.init({
   },
   name: Sequelize.STRING(), 
   category:Sequelize.STRING(10),
+  categoryId:Sequelize.INTEGER(2),
   sort:Sequelize.INTEGER(5)
 },
   {

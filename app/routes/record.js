@@ -10,6 +10,15 @@ const { HttpException } = require('../../core/model/http-exception')
 const { SuccessModel, ErrorModel } = require('../../core/model/resModel1')
 const {ItemRecord}=require('../model/itemRecord')
 router.prefix('/record')
+
+/**
+ *   @api {POST} record/addOrUpdate 新增指标项
+ *   @apiGroup record
+ *   @apiParam  {Integer} followId suifangID   
+ *   @apiParam  {Integer} itemId 指标ID 
+ *   @apiParam  {String} itemValue 选项配置（用特殊符号分割）
+ *   @apiParam  {Integer} opUserId 操作者ID   
+ */
 router.post('/addOrUpdate', async (ctx, next) => { 
   const record=ctx.request.body
   if(record.id){
@@ -25,6 +34,11 @@ router.post('/addOrUpdate', async (ctx, next) => {
   
 })
 //根据随访id获取指标信息
+/**
+ *   @api {POST} record/findByFollowId 根据随访id获取指标信息
+ *   @apiGroup record
+ *   @apiParam  {Integer} followId suifangID   
+ */
 router.post('/findByFollowId', async (ctx, next) => { 
   const followId=ctx.request.body
   console.log('followId',followId);

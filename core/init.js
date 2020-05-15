@@ -37,7 +37,7 @@ class InitManager{
   static dbsy(){
     //来自dagaozi的忠告，生产环境严禁执行此操作,会重置数据库，相当于删库，跑路
     if(global.config.isDebug){
-    //const initDB=require('../app/db/dbsync')
+    // const initDB=require('../app/db/dbsync')
     }
     
   }

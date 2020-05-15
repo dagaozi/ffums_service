@@ -13,6 +13,21 @@ const { Patient } = require('../model/patient')
 
 
 router.prefix('/patient')
+
+/**
+ *   @api {POST} patient/add 新增患者
+ *   @apiGroup patient
+ *   @apiParam  {String} name 姓名
+ *   @apiParam  {String} gender 性别（男、女）
+ *   @apiParam  {String} idCard 身份证
+ *   @apiParam  {String} inPatientId 病人编号
+ *   @apiParam  {String} mzId 门诊编号
+ *   @apiParam  {String} department 所属部门
+ *   @apiParam  {String} phone1 电话1
+ *   @apiParam  {String} phone2 电话2
+ *   @apiParam  {String} address 家庭地址
+ *   @apiParam  {String} remark 备注
+ */
 router.post('/add', async (ctx, next) => {
   const v = await new AddPatientV().validate(ctx)
   const patient = {
@@ -33,6 +48,11 @@ router.post('/add', async (ctx, next) => {
 
 })
 
+/**
+ *   @api {GET} patient/getPatient 获取患者
+ *   @apiGroup patient
+ *   @apiParam  {Integer} id 患者id
+ */
 router.get('/getPatient', async (ctx, next) => {
   const patient = await Patient.findOne({
     where: {
@@ -44,6 +64,11 @@ router.get('/getPatient', async (ctx, next) => {
   // patient.exclude=['id','name']
   ctx.body = new SuccessModel(patient)
 })
+
+/**
+ *   @api {GET} patient/getPatients 获取所有患者
+ *   @apiGroup patient
+ */
 router.get('/getPatients', async (ctx, next) => {
   const list = await Patient.findAll({
     order: [
@@ -52,6 +77,15 @@ router.get('/getPatients', async (ctx, next) => {
   })
   ctx.body = new SuccessModel(list)
 })
+
+/**
+ *   @api {GET} patient/search 搜索患者
+ *   @apiGroup patient
+ *   @apiDescription 参数可以传一个也可以三个都传
+ *   @apiParam  {String} name 性名   
+ *   @apiParam  {String} idCard 身份证   
+ *   @apiParam  {String} inPatientId 住院号   
+ */
 router.get('/search', async (ctx, next) => {
   const list = await Patient.getPatientByConditon(ctx.request.query)
   ctx.body = new SuccessModel(list)
@@ -64,6 +98,22 @@ router.get('/getbyId', async (ctx, next) => {
   })
   ctx.body = new SuccessModel(patient)
 })
+
+/**
+ *   @api {POST} patient/update 更新患者信息
+ *   @apiGroup patient
+ *   @apiParam  {String} name 姓名
+ *   @apiParam  {Integer} id   id
+ *   @apiParam  {String} gender 性别（男、女）
+ *   @apiParam  {String} idCard 身份证
+ *   @apiParam  {String} inPatientId 住院号
+ *   @apiParam  {String} mzId 门诊编号
+ *   @apiParam  {String} department 所属部门
+ *   @apiParam  {String} phone1 电话1
+ *   @apiParam  {String} phone2 电话2
+ *   @apiParam  {String} address 家庭地址
+ *   @apiParam  {String} remark 备注
+ */
 router.post('/update', async (ctx, next) => {
   const v = await new UpdatePatientV().validate(ctx)
   const updatePatient = {
@@ -97,6 +147,11 @@ router.post('/update', async (ctx, next) => {
 
 })
 //删除患者以及患者的随访信息
+/**
+ *   @api {POST} patient/delete 删除患者以及患者的随访信息
+ *   @apiGroup patient
+ *   @apiParam  {Integer} id   id  
+ */
 router.post('/delete', async (ctx, next) => {
   const patientId = ctx.request.body.patientId
   const patient = await Patient.findOne({
